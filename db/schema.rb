@@ -12,8 +12,8 @@
 
 ActiveRecord::Schema.define(version: 2021_01_28_220528) do
 
-  create_table "comments", force: :cascade do |t|
-    t.text "content"
+  create_table "authors", force: :cascade do |t|
+    t.string "name"
   end
 
   create_table "posts", force: :cascade do |t|
