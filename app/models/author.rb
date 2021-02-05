@@ -11,3 +11,5 @@ class Author < ActiveRecord::Base
     has_many :categories, through: :posts
     # author.categories
 end 
+
+

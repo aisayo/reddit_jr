@@ -9,3 +9,8 @@ gem 'pry'
 gem 'faker'
 gem 'shotgun'
 gem 'require_all'
+
+
+gem 'sinatra'
+gem 'tux'
+gem 'thin'
