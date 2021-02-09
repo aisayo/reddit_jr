@@ -1,4 +1,6 @@
 require_relative './config/environment'
 
+
+
+use PostsController
 run ApplicationController
-# use controller_name
