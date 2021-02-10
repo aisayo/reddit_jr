@@ -5,25 +5,25 @@ class PostsController < ApplicationController
     # <%= %> = what our user sees
     # <% %> = what our views process
 
-    # our user just requested all posts 
+    # user just requested all posts 
     #index route
     get '/posts' do 
         @posts = Post.all
         erb :'posts/index'
     end 
 
-            # user just made a request to view form to add a new post
-            get '/posts/new' do 
-                erb :'posts/new'
-            end 
+    # user just made a request to view form to add a new post
+    get '/posts/new' do 
+        erb :'posts/new'
+    end 
 
-    # our user wants to see details of 1 post
+    # user wants to see details of 1 post
     # show route
     get '/posts/:id' do 
-        @post = Post.find(params[:id])
-        erb :'posts/show'
         # retrieve the requested post 
+        @post = Post.find(params[:id])
         # show details of that post         
+        erb :'posts/show'
     end 
 
     # our user just submitted the new post form 
@@ -41,13 +41,12 @@ class PostsController < ApplicationController
     end 
 
     # user just submitted the edit form
-        patch '/posts/:id' do 
-            # no view 
-            # update the particular object with new attributes
-        end 
+    patch '/posts/:id' do 
+        # no view 
+        # update the particular object with new attributes
+    end 
 
     # user wants to delete an existing post 
-
     delete '/posts/:id' do 
         # no view 
     end 
