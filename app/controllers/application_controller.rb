@@ -11,7 +11,7 @@ class ApplicationController < Sinatra::Base
     # define general routes
     # any route/request that doesnt involve a model 
     get '/' do 
-       erb :test
+      "welcome"
     end 
 
     # about route
