@@ -11,7 +11,16 @@ class ApplicationController < Sinatra::Base
     # define general routes
     # any route/request that doesnt involve a model 
     get '/' do 
-      "welcome"
+      erb :welcome
+    end 
+
+    helpers do 
+
+      def get_post
+        @post = Post.find_by(id:params[:id])
+
+      end 
+
     end 
 
     # about route
