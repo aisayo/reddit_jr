@@ -10,6 +10,10 @@ class Author < ActiveRecord::Base
     # has many categories through post
     has_many :categories, through: :posts
     # author.categories
+
+    has_secure_password
+     # adds to salt to our passwords
+     # what is salt? 
 end 
 
 
