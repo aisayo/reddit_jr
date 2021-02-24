@@ -1,6 +1,10 @@
 index page
 
 <% @posts.each do |p| %>
-    <p><%= p.title %> - <%= p.id %> </p>
+    <p><%= p.title %> - <%= p.id %> 
+        <% if current_user == p.author %>
+            <a href="/posts/<%= p.id %>/edit">Edit</a> 
+        <% end %>
+    </p>
 <% end %>
 

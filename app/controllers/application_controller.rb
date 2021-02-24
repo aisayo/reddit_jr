@@ -8,6 +8,7 @@ class ApplicationController < Sinatra::Base
         set :views, 'app/views'
         enable :sessions 
         set :session_secret, "secret"
+        register Sinatra::Flash
     end 
 
     # define general routes
@@ -17,11 +18,16 @@ class ApplicationController < Sinatra::Base
       erb :welcome
     end 
 
-    helpers do 
+    helpers do # makes these methods availble to controller and views
 
-      def get_post
-        @post = Post.find_by(id:params[:id])
+      # return the logged in user
+     def current_user # return logged in user 
+      @current_user ||= Author.find_by_id(session[:author_id]) #memoization
+     end 
 
+      # check if a user logged in
+      def logged_in?
+        !!session[:author_id]
       end 
 
     end 

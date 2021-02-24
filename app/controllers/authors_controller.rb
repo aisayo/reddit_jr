@@ -2,9 +2,6 @@ class AuthorsController < ApplicationController
 
     # responsible for anything involving our author
 
-
-    # sign up '/signup' new => creating an author object
-
     get '/signup' do # render signup form
         erb :"authors/signup"
     end 
@@ -35,13 +32,26 @@ class AuthorsController < ApplicationController
         # gather data from the form => params
         # find my author object
         author = Author.find_by_username(params[:username])
+        # binding.pry
         # if author exists && password is correct
+        if author && author.authenticate(params[:password])
             # login user
+            session[:author_id] = author.id
             # redirect 
-        # else 
-            #invalid login
-            # redirect to '/login'
+            redirect '/posts'
+        else 
+            # flash[]
+            flash[:error] = "Invalid login"
+            # invalid login
+            redirect '/login'
+        end 
+    end 
+
+    get '/logout' do
+        session.clear
+        redirect '/login'
     end 
 
     # logout  'logout' delete => clears our session
 end 
+

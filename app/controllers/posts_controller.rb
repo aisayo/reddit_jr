@@ -19,7 +19,7 @@ class PostsController < ApplicationController
 
     # show route
     get '/posts/:id' do 
-        @post = Post.find_by(id:params[:id])
+       get_post
         erb :'posts/show'
         # # retrieve the requested post 
         # @post = Post.find(params[:id])
@@ -38,14 +38,23 @@ class PostsController < ApplicationController
         # @post = Post.new(title: params[:title], content: params[:content])
         # @post = Post.new(params)
         # @post.save
-        @post = Post.create(params)
+        @post = Post.new(params) #.new & .save
+        @post.author_id = session[:author_id]
+        @post.save
+        # @post = Post.new(params)
+        # @post.author_id = session[:author_id]
+        # @post.save
+        # author = Author.find(session[:author_id])
+        # author.posts << @post
+        # author.posts.build(params)
         redirect "/posts/#{@post.id}" 
     end 
 
     # our user just requested to see an edit form for a post
 
     get '/posts/:id/edit' do 
-        @post = Post.find_by(id:params[:id])
+        get_post
+        redirect_if_not_authorized
         erb :"/posts/edit"
         # retreive the object
         # autofill a form with the details of that object
@@ -55,6 +64,7 @@ class PostsController < ApplicationController
     # user just submitted the edit form
     patch '/posts/:id' do 
         get_post
+        redirect_if_not_authorized
         @post.update(title: params[:title], content: params[:content])
         redirect "/posts/#{@post.id}" 
         # @post.update
@@ -64,14 +74,24 @@ class PostsController < ApplicationController
 
     # user wants to delete an existing post 
     delete '/posts/:id' do 
-        @post = Post.find_by(id:params[:id])
+        get_post
         @post.destroy
         redirect '/posts'
         # no view 
     end 
 
+private 
 
+    def get_post 
+        @post = Post.find_by(id:params[:id])
+    end 
 
+    def redirect_if_not_authorized
+        if @post.author != current_user
+            flash[:error] = "You cant make this edit, you don't own this"
+            redirect '/posts'
+        end 
 
+    end 
 
 end 
